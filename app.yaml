@@ -8,3 +8,5 @@ visible: false
 auth: false
 networks:
   - proxy-net
+env:
+  POSTGRES_DOMAIN: "pgsql.roadtotech.me"
