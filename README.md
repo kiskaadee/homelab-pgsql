@@ -1,28 +1,33 @@
-# 🐘 Homelab PostgreSQL
+# 🐘 Homelab PostgreSQL & Adminer
 
-Primary relational database instance for self-hosted apps and development services.
-
-Part of the [homelab-core](https://github.com/kiskaadee/homelab-core) cluster ecosystem.
+Relational database backend stack with PostgreSQL 16 engine and Adminer web management console.
 
 ---
 
-## 🏗️ Architecture & Storage
+## 🏗️ Architecture & Requirements
 
-- **Container Image**: `postgres:16-alpine`
-- **Storage**: Docker named volume `postgres_data`
-- **Network**: `proxy-net`
-- **Port**: `5432`
-- **Domain**: `pgsql.arch-services.mywire.org`
+- **Proxy Network**: Attached to external `proxy-net`
+- **Domain**: `pgsql.roadtotech.me`
+- **Target Port**: `8080` (Adminer Web GUI), `5432` (PostgreSQL TCP)
 
 ---
 
-## ⚙️ Environment Variables & Secrets
+## ⚙️ Configuration & Metadata (`app.yaml`)
 
-| Variable | Description | Source |
-| :--- | :--- | :--- |
-| `POSTGRES_USER` | Master superuser name | SOPS secrets |
-| `POSTGRES_PASSWORD` | Master password | SOPS secrets |
-| `POSTGRES_DB` | Default database name | SOPS secrets |
+```yaml
+name: "pgsql"
+aliases:
+  - "postgres"
+  - "db-sql"
+domain: "pgsql.roadtotech.me"
+description: "PostgreSQL Database Engine & Adminer Web Client"
+visible: false
+auth: false
+networks:
+  - proxy-net
+env:
+  POSTGRES_DOMAIN: "pgsql.roadtotech.me"
+```
 
 ---
 
@@ -30,10 +35,15 @@ Part of the [homelab-core](https://github.com/kiskaadee/homelab-core) cluster ec
 
 ### Via Orchestrator (`appctl`)
 ```bash
-appctl up homelab-pgsql
+appctl up pgsql
 ```
 
 ### Manual Deployment
 ```bash
 docker compose up -d
 ```
+
+---
+
+## 📄 License
+This repository is released into the public domain under the [Unlicense](LICENSE).
