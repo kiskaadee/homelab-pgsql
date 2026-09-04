@@ -1,0 +1,10 @@
+name: "pgsql"
+aliases:
+  - "postgres"
+  - "db-sql"
+domain: "pgsql.roadtotech.me"
+description: "PostgreSQL Database Engine & Adminer Web Client"
+visible: false
+auth: false
+networks:
+  - proxy-net
